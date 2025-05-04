@@ -9,15 +9,18 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 @router.post("/register")
 def register(data: RegisterRequest):
     try:
-        user_data = {
-            "email": data.email,
-            "password": hash_password(data.password),
-            "is_subscribed": False,
-            "daily_usage": 0,
-            "total_urls": 0
-        }
-        users_collection.insert_one(user_data)
-        return register_user(user_data)
+        # user_data = {
+        #     "email": data.email,
+        #     "password": hash_password(data.password),
+        #     "is_subscribed": False,
+        #     "daily_usage": 0,
+        #     "total_urls": 0
+        # }
+        # user_data = data.dict()
+        # users_collection.insert_one(user_data)
+        # user_data = data
+        # return register_user(user_data)
+        return register_user(data)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 

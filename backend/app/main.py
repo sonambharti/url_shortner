@@ -13,5 +13,14 @@ def root():
 
 
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+# if __name__ == "__main__":
+#     uvicorn.run(app, host="0.0.0.0", port=8000)
+
+"""
+from app.core.log_config import listener
+
+@app.on_event("shutdown")
+def shutdown_event():
+    listener.stop()
+
+"""
