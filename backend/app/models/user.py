@@ -5,7 +5,7 @@ from datetime import datetime
 class UserInDB(BaseModel):
     id: Optional[str]
     email: EmailStr
-    hashed_password: str
+    password: str
     created_at: datetime = Field(default_factory=datetime.now)
     total_urls: int = 0
     daily_usage: int = 0

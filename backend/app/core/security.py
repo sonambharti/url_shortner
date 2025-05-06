@@ -3,14 +3,13 @@ import jwt
 from datetime import datetime, timedelta
 import bcrypt
 import os
-from dotenv import load_dotenv
+from app.core.config import JWT_SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 
-load_dotenv()
+# print(f"JWT: {JWT_SECRET_KEY}")
+# print(f"Algorithm: {ALGORITHM}")
+# print(f"Access Token Expire minutes: {ACCESS_TOKEN_EXPIRE_MINUTES}")
 
-JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "your_fallback_secret")
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 def hash_password(password: str) -> str:
     return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')

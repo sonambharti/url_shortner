@@ -1,32 +1,23 @@
 from fastapi import APIRouter, HTTPException
 from app.schemas.auth import RegisterRequest, LoginRequest, TokenResponse
 from app.services.auth_service import register_user, login_user
-from app.core.security import hash_password
-from app.db.mongodb import users_collection
+import logging
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post("/register")
-def register(data: RegisterRequest):
+async def register(data: RegisterRequest):
     try:
-        # user_data = {
-        #     "email": data.email,
-        #     "password": hash_password(data.password),
-        #     "is_subscribed": False,
-        #     "daily_usage": 0,
-        #     "total_urls": 0
-        # }
-        # user_data = data.dict()
-        # users_collection.insert_one(user_data)
-        # user_data = data
-        # return register_user(user_data)
-        return register_user(data)
+        logger.info(f'In api/routes/auth ${data}')
+        return await register_user(data)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 @router.post("/login", response_model=TokenResponse)
-def login(data: LoginRequest):
+async def login(data: LoginRequest):
     try:
-        return login_user(data)
+        return await login_user(data)
     except ValueError as e:
         raise HTTPException(status_code=401, detail=str(e))

@@ -6,3 +6,4 @@ passlib
 bcrypt
 pyjwt
 email-validator
+motor
