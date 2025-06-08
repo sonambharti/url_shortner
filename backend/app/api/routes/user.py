@@ -23,7 +23,6 @@ async def read_current_user(user: dict = Depends(get_current_user)):
 @router.put("/update-me")
 async def update_user(update: UpdateUserRequest, user: dict = Depends(get_current_user)):
     try:
-        print(f'IN update - me,\nuser: {user}')
         return await updateUser(update, user)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))

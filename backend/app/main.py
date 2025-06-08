@@ -4,8 +4,11 @@ import uvicorn
 import asyncio
 from app.db.mongodb import mongoConnection
 from app.helpers.utilities import URLDataStore
+from app.core.middleware.exception_handlers import JWTExceptionMiddleware
 
 app = FastAPI()
+
+app.add_middleware(JWTExceptionMiddleware)
 
 app.include_router(auth.router)
 app.include_router(user.router)

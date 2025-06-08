@@ -1,5 +1,5 @@
 # app/core/security.py
-import jwt
+import jwt, time
 from datetime import datetime, timedelta
 import bcrypt
 import os
@@ -19,20 +19,20 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
-    now = datetime.now()
-    expire = now + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
+    # now = datetime.now()
+    now = int(time.time())
+    expire = now + 1000 # (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
     to_encode.update({
         "exp": expire,
         "iat": now  # ✅ add issued-at timestamp
     })
     return jwt.encode(to_encode, JWT_SECRET_KEY, algorithm=ALGORITHM)
 
-
 def decode_access_token(token: str):
     try:
-        payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=[ALGORITHM,]) # options={"verify_signature": False}
         return payload
-    except ExpiredSignatureError:
-        return None
-    except InvalidTokenError:
-        return None
+    except ExpiredSignatureError as e:
+        raise e
+    except InvalidTokenError as e:
+        raise e

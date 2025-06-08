@@ -3,6 +3,7 @@ from app.helpers.utilities import URLDataStore
 from app.core.security import hash_password, verify_password, create_access_token
 from fastapi import HTTPException
 from datetime import timedelta, datetime
+import time
 
 
 async def updateUser(update, user):
@@ -13,7 +14,8 @@ async def updateUser(update, user):
         update_data["password"] = hash_password(update_data["password"])
 
     # ✅ Always update created_at or better: updated_at
-    update_data["created_at"] = datetime.now()
+    # update_data["created_at"] = datetime.now()
+    update_data["created_at"] = int(time.time())
 
     db = URLDataStore().mongoDb
     users_collection = db["users"]
