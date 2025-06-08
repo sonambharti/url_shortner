@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from app.models.user import UserInDB
 from app.api.deps import get_current_user
-# from app.db.mongodb import users_collection
 from app.helpers.utilities import URLDataStore
 from app.schemas.auth import UpdateUserRequest
 from app.services.user_service import updateUser

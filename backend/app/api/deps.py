@@ -37,22 +37,8 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         if not user_created_at:
             raise credentials_exception
 
-        # ✅ Convert timestamps to same format
-        # if isinstance(user_created_at, str):
-        #     user_created_at = datetime.fromisoformat(user_created_at)
-        # elif isinstance(user_created_at, datetime):
-        #     pass
-        # else:
-        #     raise credentials_exception
-
-        # token_issued_time = datetime.utcfromtimestamp(token_iat)
-
-        # ✅ Compare issue time and created_at
-        # if token_issued_time < user_created_at:
         if token_iat < user_created_at:
             raise HTTPException(status_code=401, detail="Token issued before user was created/updated")
-        print(f'In try, User: {user}')
         return user
     except InvalidTokenError:
-        print(f'In except, User: {credentials_exception}')
         raise credentials_exception
