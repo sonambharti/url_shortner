@@ -22,8 +22,8 @@ async def register_user(data: RegisterRequest):
         # "daily_usage": 0,
         # "total_urls": 0
     }
-    # user = UserInDB(**user_data).model_dump()
-    await users_collection.insert_one(user_data)
+    user = UserInDB(**user_data).model_dump()
+    await users_collection.insert_one(user)
     return {"msg": "User registered successfully"}
 
 

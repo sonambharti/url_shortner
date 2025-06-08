@@ -3,7 +3,7 @@ from typing import Optional
 from datetime import datetime
 
 class UserInDB(BaseModel):
-    id: Optional[str]
+    id: Optional[str] = None
     email: EmailStr
     password: str
     created_at: datetime = Field(default_factory=datetime.now)
